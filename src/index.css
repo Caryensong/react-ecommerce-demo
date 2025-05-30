@@ -1,6 +1,14 @@
 .product_container{
     display: flex;
     gap: 30px;
+    padding-right: 30px;
+}
+.shopping-cart{
+   width: 20vw;
+}
+
+.main-container{
+    display: flex;
     padding: 30px;
 }
 
