@@ -8,7 +8,13 @@ render() {
     return (
         <React.Fragment>
             <Navbar />
-            <Product />
+            <div className='product_container'>
+                <Product image="babyschuhe.jpg" title="Baby Schuhe"  description="Füge das Produkt in den Warenkorb hinzu"/>
+                <Product image="chucks.jpg" title="Chucks" description="Füge das Produkt in den Warenkorb hinzu"/>
+                <Product image="nike.jpg" title="Nike run" description="Füge die Nike's in den Warenkorb hinzu"/>
+                <Product image="anzugsschuhe.jpg" title="Leder Schuhe" description="Füge das Produkt in den Warenkorb hinzu"/>
+            </div>
+            
         </React.Fragment>
     );
 }
