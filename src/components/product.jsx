@@ -15,9 +15,9 @@ render() {
         <p className="card-text">
           {this.props.description}
         </p>
-        <a href="/" className="btn btn-primary">
+        <button onClick={this.props.onAdd} className="btn btn-primary">
           Hinzufügen
-        </a>
+        </button>
       </div>
     </div>
   );
