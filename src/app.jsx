@@ -10,14 +10,23 @@ class App extends Component {
 
   addItem = (amount, name, price) => {
     let currentItems = this.state.items;
-    currentItems.push({
-      amount,
-      name,
-      price,
-    });
+
+    let existingItems = this.state.items.find((items) => items.name === name);
+    if (existingItems) {
+      existingItems.amount++;
+      existingItems.price += price;
+    } else {
+      currentItems.push({
+        amount,
+        name,
+        price,
+      });
+    }
+
     this.setState({ items: currentItems }); // Update the state with the new items array
     console.log(this.state);
   };
+
   render() {
     return (
       <React.Fragment>
@@ -49,7 +58,7 @@ class App extends Component {
               description="Füge das Produkt in den Warenkorb hinzu"
             />
           </div>
-          <ShoppingCart items={this.state.items}/>
+          <ShoppingCart items={this.state.items} />
         </div>
       </React.Fragment>
     );
