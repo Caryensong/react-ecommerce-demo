@@ -2,61 +2,59 @@ import React, { Component } from "react";
 import Navbar from "./components/navbar";
 import Product from "./components/product";
 import ShoppingCart from "./components/shopping-cart";
+import FilterProduct from "./components/filter-product";
 
 class App extends Component {
   state = {
     items: [],
+    products: [
+      { name: "Baby Schuhe", price: 50, image: "babyschuhe.jpg", description: "Füge das Produkt in den Warenkorb hinzu" },
+      { name: "Chucks", price: 80, image: "chucks.jpg", description: "Füge das Produkt in den Warenkorb hinzu" },
+      { name: "Nike run", price: 120, image: "nike.jpg", description: "Füge die Nike's in den Warenkorb hinzu" },
+      { name: "Leder Schuhe", price: 150, image: "anzugsschuhe.jpg", description: "Füge das Produkt in den Warenkorb hinzu" }
+    ],
+    search: ""
   };
 
   addItem = (amount, name, price) => {
-    let currentItems = this.state.items;
+    let currentItems = [...this.state.items];
+    let existing = currentItems.find((item) => item.name === name);
 
-    let existingItems = this.state.items.find((items) => items.name === name);
-    if (existingItems) {
-      existingItems.amount++;
-      existingItems.price += price;
+    if (existing) {
+      existing.amount++;
+      existing.price += price;
     } else {
-      currentItems.push({
-        amount,
-        name,
-        price,
-      });
+      currentItems.push({ amount, name, price });
     }
+ 
+  };
 
-    this.setState({ items: currentItems }); // Update the state with the new items array
-    console.log(this.state);
+  handleSearch = (e) => {
+    this.setState({ search: e.target.value });
   };
 
   render() {
+    const filteredProducts = this.state.products.filter((product) =>
+      product.name.toLowerCase().includes(this.state.search.toLowerCase())
+    );
+
     return (
       <React.Fragment>
         <Navbar />
+        <FilterProduct value={this.state.search} onChange={this.handleSearch} />
+
         <div className="main-container">
           <div className="product_container">
-            <Product
-              onAdd={() => this.addItem(1, "Baby Schuhe", 50)}
-              image="babyschuhe.jpg"
-              title="Baby Schuhe"
-              description="Füge das Produkt in den Warenkorb hinzu"
-            />
-            <Product
-              onAdd={() => this.addItem(1, "Chucks", 80)}
-              image="chucks.jpg"
-              title="Chucks"
-              description="Füge das Produkt in den Warenkorb hinzu"
-            />
-            <Product
-              onAdd={() => this.addItem(1, "Nike run", 120)}
-              image="nike.jpg"
-              title="Nike run"
-              description="Füge die Nike's in den Warenkorb hinzu"
-            />
-            <Product
-              onAdd={() => this.addItem(1, "Leder Schuhe", 150)}
-              image="anzugsschuhe.jpg"
-              title="Leder Schuhe"
-              description="Füge das Produkt in den Warenkorb hinzu"
-            />
+            {filteredProducts.map((product, index) => (
+              <Product
+                key={index}
+                onAdd={() => this.addItem(1, product.name, product.price)}
+                image={product.image}
+                title={product.name}
+                description={product.description}
+                price={product.price}
+              />
+            ))}
           </div>
           <ShoppingCart items={this.state.items} />
         </div>
