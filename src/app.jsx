@@ -26,7 +26,8 @@ class App extends Component {
     } else {
       currentItems.push({ amount, name, price });
     }
- 
+
+    this.setState({ items: currentItems });  //new rendering
   };
 
   handleSearch = (e) => {
